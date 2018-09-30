@@ -1,40 +1,72 @@
+int sum;
 void setup()
 {
   noLoop();
-  size(555,500);
+  size(820, 800);
 }
 void draw()
 {
   background(255);
-  Die a = new Die(40,50);
-  a.show();
-  Die b = new Die(165,50);
-  b.show();
-  Die c = new Die(290,50);
-  c.show();
-  Die d = new Die(415,50);
-  d.show();
+  for (int i = 40; i<790; i+=130)
+  {
+    for (int j = 40; j<790; j+=150)
+    {
+      Die a = new Die(i, j);
+      a.show();
+      sum+=a.roll();
+    }
+  }
+  fill(0);
+  textSize(28);
+  text("Total: "+sum, 350, 780);
 }
 void mousePressed()
 {
   redraw();
+  sum=0;
 }
 class Die //models one single dice cube
 {
-  int myX, myY;
-  
+  int myX, myY, r;
+
   Die(int x, int y) //constructor
   {
 
     myX=x;
     myY=y;
   }
-  void roll()
+  int roll()
   {
-    //your code here
+    r = (int)(Math.random()*6+1);
+
+    if (r ==1 || r == 3 || r ==5)
+    {
+      fill((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
+      ellipse(myX + 50, myY+50, 20, 20);
+    }
+    if (r==2 || r==3 || r==4 || r==5 ||r==6)
+    {
+      fill((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
+      ellipse(myX + 25, myY+25, 20, 20);
+      ellipse(myX + 75, myY+75, 20, 20);
+    }
+    if (r==4 || r==5 ||r==6)
+    {
+      fill((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
+      ellipse(myX + 25, myY+75, 20, 20);
+      ellipse(myX + 75, myY+25, 20, 20);
+    }
+    if (r==6)
+    {
+      fill((int)(Math.random()*255+25), (int)(Math.random()*255+25), (int)(Math.random()*255+25));
+      ellipse(myX + 25, myY+50, 20, 20);
+      ellipse(myX + 75, myY+50, 20, 20);
+    }
+    return r;
   }
   void show()
   {
-    rect(myX,myY,100,100,15);
+    fill(0);
+    rect(myX, myY, 100, 100, 15);
   }
 }
